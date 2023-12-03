@@ -19,7 +19,7 @@ public class DatabaseHandler {
          // Assuming MySQL JDBC Driver is already installed and added to the classpath
          String url = "jdbc:mysql://localhost:3306/TaskManagerDB"; // Replace with your database URL
          String user = "root"; // Replace with your database username
-         String password = ""; // Replace with your database password
+         String password = ""; // Replace with your database password 
       
          connection = DriverManager.getConnection(url, user, password);
       } catch (SQLException e) {
