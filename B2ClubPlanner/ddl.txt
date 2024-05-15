@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS ClubMembershipDB; 
+USE ClubMembershipDB; 
+CREATE TABLE IF NOT EXISTS members ( member_id INT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(255) NOT NULL, last_name VARCHAR(255) NOT NULL, membership_level ENUM('Level1', 'Level2', 'Level3') NOT NULL, status ENUM('active', 'inactive') NOT NULL, email_address VARCHAR(255), dues_paid BOOLEAN, dues_paid_date DATE, renewal_date DATE ); 
