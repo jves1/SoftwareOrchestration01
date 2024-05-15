@@ -1,0 +1,4 @@
+CREATE DATABASE PersonalTaskManagerDB; 
+USE PersonalTaskManagerDB; 
+CREATE TABLE Tasks ( TaskID INT AUTO_INCREMENT PRIMARY KEY, Title VARCHAR(255) NOT NULL, Description TEXT, Priority ENUM('Low', 'Medium', 'High') NOT NULL, Deadline DATE, Status ENUM('Pending', 'In Progress', 'Completed') NOT NULL ); 
+CREATE INDEX idx_title ON Tasks (Title); CREATE INDEX idx_priority ON Tasks (Priority); CREATE INDEX idx_deadline ON Tasks (Deadline);
