@@ -1,0 +1,74 @@
+CREATE DATABASE BookStoreC1;
+USE BookStoreC1;
+
+-- DDL for Authors Table
+CREATE TABLE Authors (
+    AuthorID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Biography TEXT,
+    Photo VARCHAR(255)
+);
+
+-- DDL for Books Table
+CREATE TABLE Books (
+    BookID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    AuthorID INT,
+    ISBN VARCHAR(13),
+    Price DECIMAL(10, 2) NOT NULL,
+    PublishDate DATE,
+    CategoryID VARCHAR(100),
+    Thumbnail VARCHAR(255),
+    Description TEXT,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+-- DDL for Users Table
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(255) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Role VARCHAR(50),
+    DateJoined DATE NOT NULL
+);
+
+-- DDL for Orders Table
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    OrderDate DATE NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    Status VARCHAR(50),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+-- DDL for OrderDetails Table
+CREATE TABLE OrderDetails (
+    OrderDetailID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    BookID INT,
+    Quantity INT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+);
+
+-- DDL for ShoppingCart Table
+CREATE TABLE ShoppingCart (
+    CartID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    BookID INT,
+    Quantity INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+);
+
+CREATE TABLE Payments (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    CardNumber VARCHAR(255),
+    ExpiryDate VARCHAR(255),
+    CVV VARCHAR(255),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
