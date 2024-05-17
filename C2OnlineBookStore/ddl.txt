@@ -1,0 +1,79 @@
+-- Create database
+CREATE DATABASE bookstoreC2;
+
+-- Use the created database
+USE bookstoreC2;
+
+-- Create Books table
+CREATE TABLE Books (
+    BookID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    AuthorID INT,
+    ISBN VARCHAR(20),
+    Price DECIMAL(10, 2),
+    PublishDate DATE,
+    CategoryID VARCHAR(100),
+    Thumbnail VARCHAR(255),
+    Description TEXT,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+-- Create Authors table
+CREATE TABLE Authors (
+    AuthorID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Biography TEXT,
+    Photo VARCHAR(255)
+);
+
+-- Create Users table
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL,
+    Firstname VARCHAR(255),
+    Lastname VARCHAR(255),
+    Role VARCHAR(50),
+    DateJoined TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create Orders table
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    TotalAmount DECIMAL(10, 2),
+    Status VARCHAR(50),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+-- Create OrderDetails table
+CREATE TABLE OrderDetails (
+    OrderDetailID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    BookID INT,
+    Quantity INT,
+    Price DECIMAL(10, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+);
+
+-- Create Payment table
+CREATE TABLE Payment (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    CardNumber VARCHAR(20),
+    ExpirationDate DATE,
+    CVV VARCHAR(5),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+
+-- Create ShoppingCart table
+CREATE TABLE ShoppingCart (
+    CartID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    BookID INT,
+    Quantity INT,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+);
